@@ -11,7 +11,7 @@ node {
     }
 
     stage('Build image') {
-        app = docker.build("devopswithsam/jenkins-flask")
+        app = docker.build("pipebarreto/jenkins-flask")
     }
 
     stage('Test image') {
