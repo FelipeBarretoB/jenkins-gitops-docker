@@ -24,8 +24,8 @@ node {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
             sh """
                 echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                docker tag devopswithsam/jenkins-flask devopswithsam/jenkins-flask:${env.BUILD_NUMBER}
-                docker push devopswithsam/jenkins-flask:${env.BUILD_NUMBER}
+                docker tag pipebarreto/jenkins-flask pipebarreto/jenkins-flask:${env.BUILD_NUMBER}
+                docker push pipebarreto/jenkins-flask:${env.BUILD_NUMBER}
             """
         }
     }
