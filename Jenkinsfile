@@ -21,10 +21,15 @@ node {
     }
 
     stage('Push image') {
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh """
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                docker tag devopswithsam/jenkins-flask devopswithsam/jenkins-flask:${env.BUILD_NUMBER}
+                docker push devopswithsam/jenkins-flask:${env.BUILD_NUMBER}
+            """
         }
     }
+
 
     stage('Trigger ManifestUpdate') {
         echo "triggering updatemanifestjob"
